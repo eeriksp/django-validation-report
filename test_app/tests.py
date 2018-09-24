@@ -1,8 +1,9 @@
 from django.test import TestCase, Client
-# from django.contrib.auth.models import User
-from .models import Person
+from django.urls import resolve
+
 from validation_report.validation_report import compile_validation_report
-from validation_report.views import _convert_to_html
+from validation_report.views import validation_report, _convert_to_html
+from .test_data import add_two_person_instances
 
 RESPONSE_HTML = """<!DOCTYPE HTML>
 <html lang="en-US">
@@ -32,24 +33,13 @@ RESPONSE_HTML = """<!DOCTYPE HTML>
 
 class ValidationReportTest(TestCase):
 
-    def setUp(self):
-
-        # # Create superuser and log in
-        # password = 'adminadminadmin'
-        # user = User.objects.create_superuser('myuser', 'myemail@test.com', password)
-        # self.client = Client()
-        # login = self.client.login(username=user.username, password=password)
-
-        # Add one normal and one broken instance of Person
-        Person.objects.create(
-            is_monastic=True,
-            monastic_name='Lotus Jewel of Kindness'
-        )
-        Person.objects.create(
-            is_monastic=True
-        )
+    def test_url_resolves_to_validation_report_view(self):
+        found = resolve('/validation-report/')  
+        self.assertEqual(found.func, validation_report) 
 
     def test_validation_report(self):
+        add_two_person_instances()
         response_generator = _convert_to_html(compile_validation_report())
         html = ''.join([line for line in response_generator])
         self.assertEqual(html, RESPONSE_HTML)
+
