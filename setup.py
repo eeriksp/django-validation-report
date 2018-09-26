@@ -13,7 +13,7 @@ setup(
     packages=find_packages(),
     include_package_data=True,
     license='MIT License',
-    description='A Django app, which checks whether all model instances can be resaved without errors.',
+    description='A Django app, which checks whether all model instances can be resaved without errors',
     long_description=README,
     url='https://github.com/eeriksp/django-validation-report',
     author='eeriksp',
