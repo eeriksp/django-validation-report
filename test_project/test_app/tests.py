@@ -1,5 +1,8 @@
+from io import StringIO
+
 from django.test import TestCase, Client
 from django.urls import resolve
+from django.core.management import call_command
 
 from validation_report.validation_report import compile_validation_report
 from validation_report.views import validation_report, _convert_to_html
@@ -31,11 +34,11 @@ RESPONSE_HTML = """<!DOCTYPE HTML>
 """
 
 
-class ValidationReportTest(TestCase):
+class ValidationReportViewTest(TestCase):
 
     def test_url_resolves_to_validation_report_view(self):
-        found = resolve('/validation-report/')  
-        self.assertEqual(found.func, validation_report) 
+        found = resolve('/validation-report/')
+        self.assertEqual(found.func, validation_report)
 
     def test_validation_report(self):
         add_two_person_instances()
@@ -43,3 +46,14 @@ class ValidationReportTest(TestCase):
         html = ''.join([line for line in response_generator])
         self.assertEqual(html, RESPONSE_HTML)
 
+
+CONSOLE_OUTPUT = 'Run `full_clean()` for all Django model instances and return a report regarding failures.\nValidating \'Person\' with id \'2\' raised [ValidationError(["If a Person is monastic, \'monastic_name\' must be specified"])]\nTask completed, 1 errors detected\n'
+
+
+class ValidationReportCommandTest(TestCase):
+
+    def test_command_output(self):
+        add_two_person_instances()
+        out = StringIO()
+        call_command('validationreport', stdout=out)
+        self.assertIn(CONSOLE_OUTPUT, out.getvalue())
