@@ -5,3 +5,4 @@ __pycache__/
 *.pyc
 *.swp
 .vscode/
+test_project/test_project/secrets.py

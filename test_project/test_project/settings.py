@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
 import os
+from . import secrets
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -21,14 +22,22 @@ LOGIN_URL = '/admin/login/'
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'j6gnsiifbot2_o%9t-gxa@srw&1t1*_nu71tc3j@m@0jq+nt(k'
+SECRET_KEY = secrets.SECRET_KEY
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = []
 
+SERVER_EMAIL = secrets.SERVER_EMAIL
 
+EMAIL_HOST = secrets.EMAIL_HOST
+EMAIL_PORT = secrets.EMAIL_PORT
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = SERVER_EMAIL
+EMAIL_HOST_PASSWORD = secrets.EMAIL_HOST_PASSWORD
+
+ADMINS = secrets.ADMINS
 # Application definition
 
 INSTALLED_APPS = [
