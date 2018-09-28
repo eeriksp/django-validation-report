@@ -130,7 +130,7 @@ This command is especially useful for adding to your CI/CD script, so you will b
 
 DVR is published under MIT license.
 
-Inspired by SQLite developers, we add the following blessing:
+Inspired by [SQLite developers](https://www.sqlite.org/different.html), we add the following blessing:
 
 >May you do good and not evil\
 May you find forgiveness for yourself and forgive others\
