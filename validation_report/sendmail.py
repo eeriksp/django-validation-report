@@ -13,7 +13,6 @@ By running <i>full_clean</i> for all Django model instances we detected the foll
 {% endfor %}
 </ul>
 <p>In total, {report_len} errors were detected.</p>
-{% endif %}
 <p>Wishing you a beautiful and serene day,<br>
 your robot colleges</p>
 """
@@ -24,7 +23,6 @@ By running `full_clean` for all Django model instances we detected the following
   - Validating '{line.model_name}' with id '{id_display}' raised {line.error_message}\n
 {% endfor %}
 \nIn total, {report_len} errors were detected.\n\n
-{% endif %}
 Wishing you a beautiful and serene day,\n
 your robot colleges
 """
@@ -35,8 +33,9 @@ def send_report_email(report, report_len):
     html_msg = _compile_message(HTML_MESSAGE_TEMPLATE, report, report_len)
     mail_admins(
         subject=SUBJECT,
-        message= _compile_message(MESSAGE_TEMPLATE, report, report_len),
-        html_message= _compile_message(HTML_MESSAGE_TEMPLATE, report, report_len),
+        message=_compile_message(MESSAGE_TEMPLATE, report, report_len),
+        html_message=_compile_message(
+            HTML_MESSAGE_TEMPLATE, report, report_len),
     )
 
 

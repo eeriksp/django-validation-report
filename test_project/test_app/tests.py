@@ -3,6 +3,7 @@ from io import StringIO
 from django.test import TestCase, Client
 from django.urls import resolve
 from django.core.management import call_command
+from django.core import mail
 
 from validation_report.validation_report import compile_validation_report
 from validation_report.views import validation_report, _convert_to_html
@@ -57,3 +58,16 @@ class ValidationReportCommandTest(TestCase):
         out = StringIO()
         call_command('validationreport', stdout=out)
         self.assertIn(CONSOLE_OUTPUT, out.getvalue())
+
+
+class EmailSendingCommandTest(TestCase):
+
+    def test_command_output(self):
+        add_two_person_instances()
+        out = StringIO()
+        call_command('validationreport', '--sendmail', stdout=out)
+        self.assertIn(CONSOLE_OUTPUT, out.getvalue())
+
+        # Test that one message has been sent
+        # (because there is only one admin in settings.ADMINS)
+        self.assertEqual(len(mail.outbox), 1)
