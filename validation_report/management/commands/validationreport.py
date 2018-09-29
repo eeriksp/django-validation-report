@@ -12,21 +12,20 @@ class Command(BaseCommand):
         parser.add_argument('--sendmail',
                             action="store_true",
                             dest='sendmail',
-                            help='Send the report to addresses declared in django.conf.settings.MANAGERS')
+                            help='Send the report to addresses declared in django.conf.settings.ADMINS')
 
     def handle(self, *args, **options):
         self.write(
             'Run `full_clean()` for all Django model instances and return a report regarding failures.')
-        report_len = 0
-        report = compile_validation_report()
-        for line in report:
+        report = []
+        for line in compile_validation_report():
+            report.append(line)
             self.write(
                 f"Validating '{line.model_name}' with id '{line.instance.id}' raised {line.error_message}")
-            report_len += 1
-        self.write(f'Task completed, {report_len} errors detected')
+        self.write(f'Task completed, {len(report)} errors detected')
 
-        if options['sendmail'] and report_len:
-            send_report_email(report, report_len)
+        if options['sendmail'] and report:
+            send_report_email(report)
             recipients = '\n'.join([admin[1] for admin in settings.ADMINS])
             self.write("\nThe report was sent to the following addresses:\n"
                        f"{recipients}")

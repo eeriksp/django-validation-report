@@ -21,7 +21,7 @@ RESPONSE_HTML = """<!DOCTYPE HTML>
                 var isCompleted = !!document.getElementById('completed');
                 if (!isCompleted) {
                     var report = document.getElementById('report');
-                    report.innerHTML += '<h3 style="color: red;">ERROR: Task was not completed.</h3>'
+                    report.innerHTML += '<h3 style="color: red;">ERROR: Task was not completed, server response was interrupted.</h3>'
                 }
             });
         </script>

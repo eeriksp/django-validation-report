@@ -14,7 +14,7 @@ By running <i>full_clean</i> for all Django model instances we detected the foll
 </ul>
 <p>In total, {report_len} errors were detected.</p>
 <p>Wishing you a beautiful and serene day,<br>
-your robot colleges</p>
+your robot colleagues</p>
 """
 MESSAGE_TEMPLATE = """
 Dear Admins,\n\n
@@ -24,11 +24,12 @@ By running `full_clean` for all Django model instances we detected the following
 {% endfor %}
 \nIn total, {report_len} errors were detected.\n\n
 Wishing you a beautiful and serene day,\n
-your robot colleges
+your robot colleagues
 """
 
 
-def send_report_email(report, report_len):
+def send_report_email(report):
+    report_len = len(report)
     msg = _compile_message(MESSAGE_TEMPLATE, report, report_len)
     html_msg = _compile_message(HTML_MESSAGE_TEMPLATE, report, report_len)
     mail_admins(
@@ -41,7 +42,7 @@ def send_report_email(report, report_len):
 
 def _compile_message(template, report, report_len):
     context = {
-        'report': list(report),
+        'report': report,
         'report_len': report_len,
     }
     return render_template(template, context)

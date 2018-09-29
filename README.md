@@ -93,7 +93,7 @@ Run full_clean() for all Django model instances and return a report regarding fa
 
 Validating 'Person' with id '1' raised [ValidationError(["If a Person is monastic, 'monastic_name' must be specified"])]
 
-ERROR: Task was not completed.
+ERROR: Task was not completed, server response was interrupted.
 ```
 
 ### `Manage.py` command
