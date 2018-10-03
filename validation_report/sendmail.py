@@ -9,10 +9,10 @@ HTML_MESSAGE_TEMPLATE = """
 By running <i>full_clean</i> for all Django model instances we detected the following errors:</p>
 <ul>
 {% for line in report %}
-<li>Validating <b>'{line.model_name}'</b> with id <b>'{id_display}'</b> raised {line.error_message}</li>
+<li>Validating <b>'{{line.model_name}}'</b> with id <b>'{{id_display}}'</b> raised {{line.error_message}}</li>
 {% endfor %}
 </ul>
-<p>In total, {report_len} errors were detected.</p>
+<p>In total, {{report_len}} errors were detected.</p>
 <p>Wishing you a beautiful and serene day,<br>
 your robot colleagues</p>
 """
@@ -20,9 +20,9 @@ MESSAGE_TEMPLATE = """
 Dear Admins,\n\n
 By running `full_clean` for all Django model instances we detected the following errors:\n
 {% for line in report %}
-  - Validating '{line.model_name}' with id '{id_display}' raised {line.error_message}\n
+  - Validating '{{line.model_name}}' with id '{{id_display}}' raised {{line.error_message}}\n
 {% endfor %}
-\nIn total, {report_len} errors were detected.\n\n
+\nIn total, {{report_len}} errors were detected.\n\n
 Wishing you a beautiful and serene day,\n
 your robot colleagues
 """
