@@ -24,6 +24,11 @@ def _get_error_tuple(instance, error):
     result = Object()
     result.model_name = instance.__class__._meta.object_name
     result.instance = instance
+    try:
+        result.id_display = get_obj_admin_change_url(line.instance, line.instance.id)
+    except:
+        result.id_display = result.instance.id
+
     if isinstance(error, ValidationError):
         result.error_message = [message for message in error.error_dict['__all__']]
     else:
